@@ -1,0 +1,8 @@
+node_modules/
+ui-dist/
+dist/
+dist-electron/
+release/
+*.tsbuildinfo
+assets/fonts/*.woff2
+assets/fonts/*.otf

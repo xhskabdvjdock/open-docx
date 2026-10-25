@@ -1,0 +1,82 @@
+{
+  "name": "word-properties-editor",
+  "version": "1.0.0",
+  "private": true,
+  "author": "محرر خصائص Word",
+  "description": "محرر محلي لخصائص ملفات Word",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "desktop": "cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 concurrently -k \"vite --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && electron .\"",
+    "build": "npm run typecheck && npm run build:electron && vite build && npm run icons && electron-builder",
+    "icons": "node scripts/icons.cjs",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "test": "vitest run",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@xmldom/xmldom": "0.9.12",
+    "concurrently": "10.0.6",
+    "cross-env": "10.1.0",
+    "fflate": "0.8.3",
+    "lucide-react": "1.61.0",
+    "png-to-ico": "3.0.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sharp": "0.35.5",
+    "vite": "8.3.5",
+    "wait-on": "9.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  },
+  "build": {
+    "appId": "com.local.word-properties-editor",
+    "productName": "محرر خصائص Word",
+    "compression": "normal",
+    "files": [
+      "ui-dist/**",
+      "dist-electron/**"
+    ],
+    "directories": { "output": "release" },
+    "extraResources": [
+      {
+        "from": "electron/set-file-times.ps1",
+        "to": "set-file-times.ps1"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icons/app.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icons/app.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icons"
+    }
+  }
+}

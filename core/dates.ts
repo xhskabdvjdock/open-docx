@@ -1,0 +1,3 @@
+export const toUtcW3cDtf=(value:string)=>{if(!value)return '';const ms=Date.parse(value.endsWith('Z')||/[+-]\d\d:\d\d$/.test(value)?value:`${value}Z`);if(!Number.isFinite(ms))throw new Error('التاريخ غير صالح.');return new Date(ms).toISOString().replace(/\.\d{3}Z$/,'Z');};
+export const utcToLocalInput=(value:string)=>{if(!value)return '';const d=new Date(toUtcW3cDtf(value));const p=(n:number)=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;};
+export const localInputToUtc=(value:string)=>{if(!value)return '';const d=new Date(value);if(!Number.isFinite(d.getTime()))throw new Error('التاريخ المحلي غير صالح.');return d.toISOString().replace(/\.\d{3}Z$/,'Z');};
